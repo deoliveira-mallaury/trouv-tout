@@ -1,0 +1,220 @@
+:root {
+  --main-bg-color: #fef4e6;
+  --header-bg-color: #2c2c2c;
+  --element-color: #e67e22;
+  --title-fnt: "Lobster", sans-serif;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%; /* corrige le débordement */
+}
+
+body {
+  background-color: #fcf2e1 !important;
+  font-family: "Indie Flower", cursive;
+  color: var(--main-bg-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+/* header section */
+header {
+  width: 100%;
+  /* height: 12vh; */
+  color: #356d6e;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background-color: var(--header-bg-color);
+  border-radius: 0 0 20px 20px;
+}
+.brand {
+  width: 70%;
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.brand a {
+  color: #356d6e;
+  text-decoration: none;
+}
+
+.navigation {
+  display: flex;
+  margin: auto;
+  flex-wrap: wrap;
+  width: 50%;
+}
+#nav-list .hidden {
+  display: none;
+}
+.nav-collapse {
+  display: flex;
+  flex-direction: row; /* Alignement horizontal */
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+#navbar .nav-link,
+.nav-item {
+  text-align: center;
+  color: #e67e22;
+  font-weight: bold;
+  font-style: normal;
+  list-style: none;
+}
+.nav-toggle {
+  cursor: pointer;
+  background-color: #2c2c2c;
+  color: #356d6e;
+  border: none;
+  outline: none;
+  margin: auto;
+}
+.menuIcon {
+  width: 80%;
+  border: none;
+  outline: none;
+}
+.active {
+  color: #fcf2e1;
+}
+.hidden {
+  display: none;
+}
+/* main section */
+main {
+  margin-bottom: 5vh;
+  flex: 1;
+}
+/* footerSection */
+footer {
+  background-color: var(--header-bg-color);
+  height: 12vh;
+  width: 100%;
+}
+footer p {
+  width: auto;
+}
+/* home section */
+.searchSection {
+  width: 85%;
+  margin: auto;
+}
+h2 {
+  font-family: var(--title-fnt);
+  color: black;
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 1rem auto;
+}
+.searchBar {
+  position: relative;
+  margin: auto;
+}
+#searchBar {
+  width: 100%;
+  margin: 1rem auto;
+}
+#searchBarSubmit {
+  position: absolute;
+  right: 0.5rem;
+  top: 2.7rem;
+  transform: translateY(-50%);
+  background-color: var(--element-color);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+}
+.categoriesSection,
+.latestListingSection {
+  display: flex;
+  width: 85%;
+  margin: auto;
+}
+.categoriesTitleSection,
+.latestListingTitle {
+  width: 100%;
+  text-align: left;
+  margin: 1rem auto;
+}
+.moreads {
+  background-color: var(--element-color);
+  color: #fef4e6;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 0.2rem 0.8rem;
+  margin: auto;
+  font-size: 1rem;
+}
+/* login & signIn section */
+
+.signupForm,
+.loginForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  margin: 2% auto;
+  padding: 1rem;
+  border: var(--element-color) 1px solid;
+  border-radius: 10px;
+}
+.loginSect {
+  color: #05f2f2;
+}
+.loginSect p {
+  color: var(--header-bg-color);
+  text-align: center;
+}
+.loginSect .signupLink {
+  color: var(--element-color);
+  text-align: center;
+}
+label {
+  margin: 0.5rem auto;
+  color: var(--header-bg-color);
+  width: 80%;
+  text-align: center;
+}
+input {
+  padding: 0.8rem;
+  width: 75%;
+  border-radius: 10px;
+}
+.forgotPass {
+  color: var(--header-bg-color);
+  font-size: 0.8rem;
+  align-self: flex-start;
+  margin: 0.5rem auto;
+}
+#signupBtn,
+#loginBtn {
+  margin: 1rem auto;
+  background-color: var(--element-color);
+  padding: 0.5rem;
+  border: var(--header-bg-color) 1px solid;
+  /* color: #05f2f2; */
+}
+.errorForm {
+  background-color: #f205b3;
+  padding: 1rem;
+}
+.bi-arrow-left-circle {
+  font-size: 1.5rem;
+  color: var(--element-color);
+  cursor: pointer;
+}
+.result{
+  color: var(--header-bg-color);
+}

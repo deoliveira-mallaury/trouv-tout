@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Trouv'tout</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <main>
+        <section class="searchSection">
+            <h2 class="titleSection">Rechercher Petites Annonces</h2>
+            <form action="" class="searchBar" method="get">
+                <input type="text" name="searchBarInput" id="searchBar" placeholder="Rechercher ...">
+                <button type="submit" id="searchBarSubmit">Rechercher</button>
+            </form>
+        </section>
+        <section class="categoriesSection">
+            <h2 class="categoriesTitleSection">Catégories</h2>
+            <div class="catItems"></div>
+        </section>
+        <section class="latestListingSection">
+            <h2 class="latestListingTitle">Dernières Annonces</h2>
+            <button class="moreads" type="button">Parcourir</button>
+            <div class="latestListingItems"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; <span id="year"></span> - Trouv'tout</p>
+    </footer>
+    <script src="./main.js"></script>
+
+</body>
+
+</html>
