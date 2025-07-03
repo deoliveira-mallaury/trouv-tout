@@ -20,12 +20,14 @@
         <section class="loginSect">
 
             <form action="" class="loginForm" method="post">
+                <p class="result"></p>
+
                 <label for="email">Email:</label>
                 <input type="email" name="" id="email" />
                 <label for="pass">Password :</label>
                 <input type="password" name="" id="pass" />
                 <a class="forgotPass" href="#">Mot de passe oublié?</a>
-                <button id="loginBtn">Se connecter</button>
+                <button type="submit" id="loginBtn">Se connecter</button>
             </form>
             <p>Nouveau Ici ?
                 <a href="#" class="signupLink">S'inscrire</a>
@@ -37,6 +39,8 @@
         <section class="signupSect hidden">
             <form class="signupForm" action="/api/auth/" method="post">
                 <i class="bi bi-arrow-left-circle"></i>
+                <label for="pseudo">Pseudo:*</label>
+                <input type="text" name="pseudo" id="pseudo" required />
                 <label for="lastname">Nom:</label>
                 <input type="text" name="lastname" id="lastname" />
                 <label for="name">Prénom:</label>
@@ -47,11 +51,11 @@
                 <input type="text" name="location" id="location" />
                 <label for="avatar">Avatar:</label>
                 <input type="file" name="avatar" id="avatar" />
-                <label for="email">Email:</label>
+                <label for="email">Email:*</label>
                 <input type="email" name="email" id="emailSignup" required />
-                <label for="pass">Mot de passe :</label>
+                <label for="pass">Mot de passe :*</label>
                 <input type="password" name="password" id="passSignup" required />
-                <label for="confirmPass">Confirmer mot de passe :</label>
+                <label for="confirmPass">Confirmer mot de passe :*</label>
                 <input type="password" name="confirmPass" id="confirmPass" required />
                 <button type="submit" id="signupBtn">S'inscrire</button>
                 <p class="result"></p>

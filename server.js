@@ -11,10 +11,12 @@ app.use(express.json()); // Pour traiter les requêtes en JSON
 
 // 3. Importer les routes liées à l'authentification
 const authRoutes = require("./Routes/auth.routes");
+const usersRoutes = require("./Routes/users.routes");
 
 // 4. Monter les routes avec un préfixe propre
 // Exemple : POST /api/auth ⇒ création d'un utilisateur
 app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
 
 // 5. Servir des fichiers statiques (si tu en as)
 app.use(express.static("Public"));

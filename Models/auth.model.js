@@ -1,9 +1,21 @@
 const { supabase } = require("../Services/supabaseClient");
-
 // Fonction d'inscription
-exports.signup = async(email, password)=> {
-  const { data, error } = await supabase.auth.signUp({ email, password });
-  console.log("Reçu par signup:",  email, password);
+exports.signup = async (
+  email,
+  password,
+  pseudo,
+  name,
+  lastname,
+  phone,
+  location,
+  avatar
+) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  console.log(data);
+  console.log("Reçu par signup:", email, password);
   if (error) {
     console.error("Erreur d'inscription :", error.message);
     return;
@@ -11,11 +23,23 @@ exports.signup = async(email, password)=> {
 
   const userId = data.user?.id;
   console.log(userId);
+  console.log("auth.uid attendu :", userId);
+  console.log("password attendu :", pseudo, name, lastname);
 
   if (userId) {
-    const { error: insertError } = await supabase
-      .from("User")
-      .insert([{ id: userId, email:data.user?.email}]);
+    const { error: insertError } = await supabase.from("Users").insert([
+      {
+        id: userId,
+        email: data.user?.email,
+        password,
+        pseudo,
+        name,
+        lastname,
+        phone,
+        location,
+        avatar_url: avatar,
+      },
+    ]);
 
     if (insertError) {
       console.error(
@@ -28,20 +52,18 @@ exports.signup = async(email, password)=> {
   }
 
   console.log("Utilisateur inscrit !", data.user);
-}
-
-// Fonction de connexion
-// export async function login(email, password) {
-//   const { data, error } = await supabase.auth.signInWithPassword({
-//     email,
-//     password,
-//   });
-//   if (error) {
-//     console.error(error.message);
-//   } else {
-//     console.log("Connecté !", data.user);
-//   }
-// }
+};
+exports.login = async (email, password) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error) {
+    console.error(error.message);
+  } else {
+    console.log("Connecté !", data.user);
+  }
+};
 
 // // Fonction de déconnexion
 // export async function logout() {
@@ -50,16 +72,4 @@ exports.signup = async(email, password)=> {
 // }
 
 // // Récupérer l’utilisateur connecté
-// export async function getUser() {
-//   const { data } = await supabase.auth.getUser();
-//     const { data: profil, error } = await supabase
-//         .from("profils")
-//         .select("name"); // Sélectionne le champ name correctement
 
-//     if (error) {
-//         console.error("Erreur lors de la récupération du profil :", error.message);
-//         return null;
-//     }
-
-//     return { user: data.user, profil }; // Retourne les données utilisateur et du profil
-// }

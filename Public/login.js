@@ -21,7 +21,12 @@ document.querySelector(".signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const signupForm = document.querySelector(".signupForm");
+  const pseudo = signupForm["pseudo"].value;
+  const lastname = signupForm["lastname"].value;
   const name = signupForm["name"].value;
+  const phone = signupForm["phone"].value;
+  const location = signupForm["location"].value;
+  const avatar = signupForm["avatar"].value;
   const email = signupForm["emailSignup"].value;
   const pass = signupForm["passSignup"].value;
   const confirmPass = signupForm["confirmPass"].value;
@@ -29,9 +34,7 @@ document.querySelector(".signupForm").addEventListener("submit", async (e) => {
 
   const passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\W).{10,}$/;
   let errorMessage = "";
-console.log(
-email,
-pass);
+  console.log(email, pass, pseudo);
 
   if (!pass.match(passRegex)) {
     errorMessage +=
@@ -54,13 +57,21 @@ pass);
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        email :email, password: pass }),
+      body: JSON.stringify({
+        email: email,
+        password: pass,
+        pseudo: pseudo,
+        name: name,
+        lastname: lastname,
+        phone: phone,
+        location: location,
+        avatar: avatar,
+      }),
     });
-    
+
     const result = await response.json();
     console.log(result);
-    
+
     if (!response.ok) {
       errorContainer.innerHTML =
         result.message || "Erreur lors de l'inscription.";
@@ -76,18 +87,33 @@ pass);
 });
 
 // // login function send to homepage with user name
-// // document.getElementById("loginBtn").addEventListener("click", async (e) => {
-// //   e.preventDefault();
-// //   const email = loginform["email"].value;
-// //   const pass = loginform["pass"].value;
-// //   await login(email, pass);
-// //   const user = await getUser();
-// //   if (user) {
-// //     window.location.href = "/";
-// //   } else {
-// //     errorContainer.innerHTML = "Erreur lors de la connexion.";
-// //   }
-// // });
+loginform.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = loginform["email"].value;
+  const pass = loginform["pass"].value;
+  const errorContainer = document.querySelector(".errorForm");
+  let errorMessage = "";
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: pass,
+      }),
+    });
+    if (!response.ok) {
+      errorContainer.innerHTML =
+        result.message || "Erreur lors de la connexion.";
+    } else {
+      window.location.href = "/";
+    }
+  } catch (error) {
+    errorContainer.innerHTML = "Erreur réseau : " + error.message;
+  }
+});
 
 // // document.getElementById("logoutBtn").addEventListener("click", async () => {
 // //   await logout();
