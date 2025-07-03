@@ -37,7 +37,6 @@ exports.login = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ message: "Email et mot de passe requis." });
   }
-
   try {
     const result = await authModel.login(email, password);
     return res.status(200).json({ message: "Connecté avec succès." });
@@ -46,5 +45,16 @@ exports.login = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Erreur serveur lors de la connexion." });
+  }
+};
+exports.logout = async (req, res) => {
+  try {
+    await authModel.logout();
+    return res.status(200).json({ message: "Déconnecté avec succès." });
+  } catch (error) {
+    console.error("Erreur logout :", error.message);
+    return res
+      .status(500)
+      .json({ message: "Erreur serveur lors de la déconnexion." });
   }
 };
