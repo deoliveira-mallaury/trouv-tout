@@ -106,12 +106,22 @@ footer p {
   width: 85%;
   margin: auto;
 }
-h2 {
+h2,
+h3 {
   font-family: var(--title-fnt);
   color: black;
-  font-size: 1.8rem;
-  text-align: center;
   margin: 1rem auto;
+}
+h2{
+  font-size: 2.5rem;
+  text-align: center;
+  width: 80%;
+  color: #df6d14;
+}
+h3{
+  font-size: 1.8rem;
+  text-align: left;
+
 }
 .searchBar {
   position: relative;
@@ -215,6 +225,6 @@ input {
   color: var(--element-color);
   cursor: pointer;
 }
-.result{
+.result {
   color: var(--header-bg-color);
 }
