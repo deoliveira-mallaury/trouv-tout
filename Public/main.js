@@ -23,13 +23,7 @@ const loadHeader = async () => {
   try {
     const res = await fetch("/components/header.html");
     const html = await res.text();
-
-    // Injecte le HTML dans le DOM
     document.getElementById("navbar").innerHTML = html;
-
-    // Récupère l'utilisateur avant de manipuler le DOM
-
-    // Attends que le DOM soit prêt avant d'ajouter les listeners
     requestAnimationFrame(() => {
       const toggleBtn = document.querySelector(".nav-toggle");
       const navList = document.getElementById("nav-list");
@@ -69,7 +63,7 @@ const loadHeader = async () => {
 window.addEventListener("load", loadHeader);
 document.getElementById("logout").addEventListener("click", async () => {
   try {
-    await supabase.auth.signOut(); // Invalide la session côté navigateur
+    await supabase.auth.signOut();
     const response = await fetch("/api/auth/logout", { method: "GET" });
     const result = await response.json();
 
@@ -79,7 +73,6 @@ document.getElementById("logout").addEventListener("click", async () => {
     }
     document.querySelector(".welcomeTitle").textContent = "";
     console.log(result.message);
-    // window.location.href = "/login"; // Redirection vers la page de connexion
   } catch (error) {
     console.error("Erreur de déconnexion :", error);
   }
