@@ -66,10 +66,9 @@ exports.login = async (email, password) => {
 };
 
 // // Fonction de déconnexion
-// export async function logout() {
-//   await supabase.auth.signOut();
-//   console.log("Déconnecté");
-// }
+exports.logout = async () => {
+  await supabase.auth.signOut();
+  console.log("Déconnecté");
+};
 
 // // Récupérer l’utilisateur connecté
-

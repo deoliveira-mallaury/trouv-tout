@@ -1,35 +1,23 @@
 const year = new Date().getFullYear();
 document.getElementById("year").textContent = year;
-
+let profil = "";
 const getUser = async () => {
   try {
-    const response = await fetch("/api/users", {
-      method: "GET",
-    });
-
+    const response = await fetch("/api/users", { method: "GET" });
     const result = await response.json();
-console.log(result.profil);
-
     if (!response.ok) {
-      errorContainer.innerHTML =
-        result.message || "Erreur lors de la connexion.";
       return null;
     } else {
-      document.querySelector(
-        ".welcomeTitle"
-      ).textContent = `Bienvenue ${result.profil}`;
+      profil = result.profil;
+      if (profil) {
+        return profil;
+      }
     }
   } catch (error) {
     console.error("Erreur de récupération :", error);
     return null;
   }
 };
-
-window.addEventListener("load", async () => {
-  loadHeader;
-  getUser; // Appel correct de la fonction
- 
-});
 
 const loadHeader = async () => {
   try {
@@ -40,12 +28,6 @@ const loadHeader = async () => {
     document.getElementById("navbar").innerHTML = html;
 
     // Récupère l'utilisateur avant de manipuler le DOM
-    const profil = await getUser();
-    if (profil) {
-      document.querySelector(
-        ".welcomeTitle"
-      ).textContent = `Bienvenue ${profil.name}`;
-    }
 
     // Attends que le DOM soit prêt avant d'ajouter les listeners
     requestAnimationFrame(() => {
@@ -69,9 +51,36 @@ const loadHeader = async () => {
         isOpen = !isOpen;
       });
     });
+    const profil = await getUser();
+    if (profil) {
+      document.querySelector(
+        ".welcomeTitle"
+      ).textContent = `Bienvenue ${profil}`;
+      let accountTogle = document.getElementById("login");
+      accountTogle.id = "account";
+      accountTogle.textContent = "Compte";
+      document.getElementById("logout").classList.remove("hidden");
+    }
   } catch (error) {
     console.error("Erreur dans loadHeader :", error);
   }
 };
 
 window.addEventListener("load", loadHeader);
+document.getElementById("logout").addEventListener("click", async () => {
+  try {
+    await supabase.auth.signOut(); // Invalide la session côté navigateur
+    const response = await fetch("/api/auth/logout", { method: "GET" });
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error("Erreur logout :", result.message);
+      return;
+    }
+    document.querySelector(".welcomeTitle").textContent = "";
+    console.log(result.message);
+    // window.location.href = "/login"; // Redirection vers la page de connexion
+  } catch (error) {
+    console.error("Erreur de déconnexion :", error);
+  }
+});

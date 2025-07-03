@@ -103,6 +103,9 @@ footer p {
 }
 /* home section */
 .searchSection {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 85%;
   margin: auto;
 }
@@ -112,20 +115,28 @@ h3 {
   color: black;
   margin: 1rem auto;
 }
-h2{
+h2 {
   font-size: 2.5rem;
   text-align: center;
   width: 80%;
   color: #df6d14;
 }
-h3{
+h3 {
   font-size: 1.8rem;
   text-align: left;
-
+}
+.btn {
+  background-color: var(--element-color);
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  margin: auto;
 }
 .searchBar {
   position: relative;
   margin: auto;
+  width: 100%;
 }
 #searchBar {
   width: 100%;
@@ -227,4 +238,46 @@ input {
 }
 .result {
   color: var(--header-bg-color);
+}
+@media (min-width: 601px) {
+
+.homeSect{
+  display: flex;
+  width: 80%;
+  margin: auto;
+}
+  .header_other_page {
+    height: 16vh;
+  }
+
+
+  /* ---------------------- */
+  .searchSection {
+    width: 50%;
+  }
+  .categoriesSection,
+  .latestListingSection {
+    width: 90%;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    margin: auto;
+  }
+  .categoriesTitleSection,
+  .latestListingTitle {
+    width: auto;
+    /* text-align: left; */
+    margin: 1rem auto;
+  }
+  /* footer */
+  footer {
+    height: 16vh;
+  }
+
+  .nav_cvg_item {
+    font-size: 1.2rem;
+  }
+
+  .footer_copyright {
+    font-size: 1rem;
+  }
 }
