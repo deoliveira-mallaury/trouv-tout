@@ -1,59 +1,58 @@
-const { supabase } = require("../Services/supabaseClient");
+import supabase from "../Services/supabaseClient.js";
+import bcrypt from "bcrypt";
+
 // Fonction d'inscription
-exports.signup = async (
-  email,
-  password,
-  pseudo,
-  name,
-  lastname,
-  phone,
-  location,
-  avatar
-) => {
+
+
+export async function signup(email, password, pseudo, location) {
+  // 👉 Étape 1 : envoie le mot de passe en clair à Supabase Auth (il le hash lui-même)
   const { data, error } = await supabase.auth.signUp({
     email,
-    password,
+    password, // ✅ Clé attendue par Supabase
+    options: {
+      data: {
+        pseudo,
+        location,
+      },
+    },
   });
-  console.log(data);
-  console.log("Reçu par signup:", email, password);
+
+  console.log("Reçu par signup:", email, "[mot de passe caché]");
+
   if (error) {
-    console.error("Erreur d'inscription :", error.message);
+    console.log("Erreur d'inscription :", error.message);
     return;
   }
 
   const userId = data.user?.id;
-  console.log(userId);
-  console.log("auth.uid attendu :", userId);
-  console.log("password attendu :", pseudo, name, lastname);
+  if (!userId) {
+    console.error("ID utilisateur manquant !");
+    return;
+  }
 
-  if (userId) {
-    const { error: insertError } = await supabase.from("Users").insert([
-      {
-        id: userId,
-        email: data.user?.email,
-        password,
-        pseudo,
-        name,
-        lastname,
-        phone,
-        location,
-        avatar_url: avatar,
-      },
-    ]);
+  // 👉 Étape 2 : enregistrer un profil personnalisé dans ta table usersCustom
+  const hashedPwd = await bcrypt.hash(password, 10); // tu peux conserver ça pour stocker le hash manuellement
 
-    if (insertError) {
-      console.error(
-        "Erreur lors de l'insertion du profil :",
-        insertError.message
-      );
-    } else {
-      console.log("Profil inséré !");
-    }
+  const { error: insertError } = await supabase.from("usersCustom").insert([
+    {
+      id: userId,
+      email: data.user?.email,
+      password_hash: hashedPwd, // hashé manuellement pour ta propre table
+      pseudo,
+      location,
+    },
+  ]);
+
+  if (insertError) {
+    console.error("Erreur lors de l'insertion du profil :", insertError.message);
+  } else {
+    console.log("Profil inséré !");
   }
 
   console.log("Utilisateur inscrit !", data.user);
-};
-exports.login = async (email, password) => {
+}
+
+export async function login(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -63,12 +62,19 @@ exports.login = async (email, password) => {
   } else {
     console.log("Connecté !", data.user);
   }
-};
+}
 
 // // Fonction de déconnexion
-exports.logout = async () => {
+export async function logout() {
   await supabase.auth.signOut();
   console.log("Déconnecté");
-};
+}
 
 // // Récupérer l’utilisateur connecté
+const authModel = {
+  signup,
+  login,
+  logout,
+};
+
+export default authModel;

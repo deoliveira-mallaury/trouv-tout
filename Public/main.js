@@ -3,7 +3,7 @@ document.getElementById("year").textContent = year;
 let profil = "";
 const getUser = async () => {
   try {
-    const response = await fetch("/api/users", { method: "GET" });
+    const response = await fetch("/api/auth/login", { method: "GET" });
     const result = await response.json();
     if (!response.ok) {
       return null;

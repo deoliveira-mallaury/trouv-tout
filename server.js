@@ -1,22 +1,39 @@
 // server.js (à la racine du projet)
 
-const express = require("express");
+import express from "express";
+import session from "express-session";
+import Route from "./Routes/index.js";
+import dotenv from "dotenv";
+import authRoutes from "./Routes/auth.routes.js";
 const app = express();
 
 // 1. Charger les variables d'environnement
-require("dotenv").config();
+dotenv.config();
 
 // 2. Middlewares essentiels
 app.use(express.json()); // Pour traiter les requêtes en JSON
 
 // 3. Importer les routes liées à l'authentification
-const authRoutes = require("./Routes/auth.routes");
-const usersRoutes = require("./Routes/users.routes");
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true, // empêche l'accès au cookie par du JS côté client
+      secure: false, // à mettre sur true en production si HTTPS
+      sameSite: "lax", // réduit le risque CSRF
+      maxAge: 1000 * 60 * 15, // expire après 15 minutes
+    },
+  })
+);
+// import usersRoutes from "./Routes/users.routes.js";
 
 // 4. Monter les routes avec un préfixe propre
 // Exemple : POST /api/auth ⇒ création d'un utilisateur
-app.use("/api/auth", authRoutes);
-app.use("/api/users", usersRoutes);
+app.use("/api", Route);
+
+// app.use("/api/users", usersRoutes);
 
 // 5. Servir des fichiers statiques (si tu en as)
 app.use(express.static("Public"));

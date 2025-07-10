@@ -1,11 +1,12 @@
-const express = require("express");
+// auth.routes.js
+import express from "express";
+import { auth } from "../Controllers/index.js";
+import { date } from "../Middleware/index.js";
 const router = express.Router();
 
-const authController = require("../Controllers/auth.controller");
-// Test simple pour vérifier que le routeur fonctionne
+router.post("/signup", date, auth.createUser);
+router.post("/login", auth.login);
+router.get("/login", auth.login);
+router.get("/logout", auth.logout);
 
-router.post("/", authController.createUser);
-router.get("/logout", authController.logout);
-router.post("/login", authController.login);
-
-module.exports = router;
+export default router;

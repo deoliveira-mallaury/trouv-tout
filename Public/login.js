@@ -22,11 +22,7 @@ document.querySelector(".signupForm").addEventListener("submit", async (e) => {
 
   const signupForm = document.querySelector(".signupForm");
   const pseudo = signupForm["pseudo"].value;
-  const lastname = signupForm["lastname"].value;
-  const name = signupForm["name"].value;
-  const phone = signupForm["phone"].value;
   const location = signupForm["location"].value;
-  const avatar = signupForm["avatar"].value;
   const email = signupForm["emailSignup"].value;
   const pass = signupForm["passSignup"].value;
   const confirmPass = signupForm["confirmPass"].value;
@@ -47,12 +43,13 @@ document.querySelector(".signupForm").addEventListener("submit", async (e) => {
 
   if (errorMessage !== "") {
     errorContainer.innerHTML = errorMessage;
+    errorContainer.classList.remove("hidden");
     return;
   }
 
   // Envoi vers l'API pour créer un utilisateur
   try {
-    const response = await fetch("/api/auth", {
+    const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,11 +58,7 @@ document.querySelector(".signupForm").addEventListener("submit", async (e) => {
         email: email,
         password: pass,
         pseudo: pseudo,
-        name: name,
-        lastname: lastname,
-        phone: phone,
         location: location,
-        avatar: avatar,
       }),
     });
 
@@ -108,7 +101,9 @@ loginform.addEventListener("submit", async (e) => {
       errorContainer.innerHTML =
         result.message || "Erreur lors de la connexion.";
     } else {
-      window.location.href = "/";
+      // window.location.href = "/";
+      console.log(`Connecté avec succés ${email}`);
+      
     }
   } catch (error) {
     errorContainer.innerHTML = "Erreur réseau : " + error.message;
